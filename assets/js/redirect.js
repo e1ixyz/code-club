@@ -1,12 +1,12 @@
 // Sheets Files
 function updateRedirectAndAssignmentsFromSheet() {
-  const googleSheetsURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTEvrRA2uajNMiYVR_BOl31QXR5oZLd27mNjF_dWtWEDF8VL8_j7I6I9DVoqn2ntW-x2gfawVTQq0tC/pub?output=csv';
+  const googleSheetsURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vRnbOxOtpBxz4xGZaSZFvHKOggqbbIHeQ-R75tb1l-nfVTEJYttADP9sVFCWXPMQMfeHhFZLKJ1w8LC/pub?output=csv';
   
   $.get(googleSheetsURL, function (data) {
       const rows = data.split('\n');
 
-      // Update the redirect in the head tag
-      const redirectLinkInHead = rows[0].trim(); // Assuming the first line in Google Sheets is the redirect link
+      // Get the redirect link from column A, row 1
+      const redirectLinkInHead = rows[0].split(',')[0].trim(); // Assuming the first cell in Google Sheets is the redirect link
       $('head meta[http-equiv="refresh"]').attr('content', '0; url=' + redirectLinkInHead);
 
       // Update the redirect link in the message
