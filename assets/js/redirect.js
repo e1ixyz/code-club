@@ -6,12 +6,12 @@ function updateRedirectAndAssignmentsFromSheet() {
       const rows = data.split('\n');
 
       // Get the redirect link from column A, row 1
-      const redirectLinkInHead = rows[0].split(',')[0].trim(); // Assuming the first cell in Google Sheets is the redirect link
-      $('head meta[http-equiv="refresh"]').attr('content', '0; url=' + redirectLinkInHead);
+      const redirectLinkInHead = rows[0].trim(); // Assuming the first cell in Google Sheets is the redirect link
+      $('head meta[http-equiv="refresh"]').attr('content', '0; url=' + encodeURI(redirectLinkInHead));
 
       // Update the redirect link in the message
       const redirectLink = $('#redirectLink');
-      redirectLink.attr('href', redirectLinkInHead);
+      redirectLink.attr('href', encodeURI(redirectLinkInHead));
 
       // Update assignments list
       const assignmentsContainer = $('.assignments ul');
@@ -21,7 +21,7 @@ function updateRedirectAndAssignmentsFromSheet() {
               const assignmentLink = columns[1].trim(); // Get link from column B
               const assignmentDescription = columns[2].trim(); // Get assignment name from column C
 
-              const assignmentElement = $('<a>').attr('href', assignmentLink).addClass('assignment-link');
+              const assignmentElement = $('<a>').attr('href', encodeURI(assignmentLink)).addClass('assignment-link');
               assignmentElement.text(assignmentDescription);
 
               const listItem = $('<li>').append(assignmentElement);
